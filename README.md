@@ -51,6 +51,19 @@ npm start
 3. Enter your **GitHub Pages URL**.
 4. Save and enable the Power-Up on your board.
 
+## ❗ Fixing Merge Conflicts (If You See One)
+If you encounter a merge conflict while pushing to GitHub, follow these steps:
+1. Open the conflicting file (e.g., `README.md`) in VS Code.
+2. Look for conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`).
+3. Decide which version to keep or manually merge them.
+4. Save the file.
+5. Run:
+   ```sh
+   git add README.md
+   git commit -m "Resolved merge conflict in README.md"
+   git push -u origin main
+   ```
+
 ## 💡 Future Enhancements
 - Custom priority labels
 - Auto-priority based on due date
@@ -59,4 +72,4 @@ npm start
 ## 🔗 License
 This project is licensed under the MIT License.
 
-**Happy Coding!**
+🚀 **Happy Coding!**
