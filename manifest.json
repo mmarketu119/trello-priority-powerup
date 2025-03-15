@@ -1,0 +1,28 @@
+{
+    "manifest_version": 3,
+    "name": "Trello Quick Priority Setter",
+    "version": "1.0",
+    "description": "Quickly set task priority on Trello cards.",
+    "permissions": ["storage", "activeTab"],
+    "host_permissions": ["https://api.trello.com/*"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+      "default_popup": "public/popup.html",
+      "default_icon": {
+        "16": "public/icon.png",
+        "48": "public/icon.png",
+        "128": "public/icon.png"
+      }
+    },
+    "capabilities": {
+      "card-buttons": [
+        {
+          "text": "Set Priority",
+          "callback": "setPriorityPopup"
+        }
+      ]
+    }
+  }
+  
