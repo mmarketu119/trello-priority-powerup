@@ -11,6 +11,7 @@ window.TrelloPowerUp.initialize({
     }
 });
 
+// Opens the Priority Popup
 function setPriorityPopup(t) {
     return t.popup({
         title: "Set Priority",
@@ -21,9 +22,10 @@ function setPriorityPopup(t) {
     });
 }
 
+// Fetches and displays the priority badge
 function getPriorityBadge(t) {
     return t.get('card', 'shared', 'priority')
-        .then(function (priority) {
+        .then(priority => {
             if (priority) {
                 return [{
                     text: "Priority: " + priority,
@@ -38,7 +40,7 @@ function getPriorityBadge(t) {
         });
 }
 
-// Function to set priority
+// Handles priority selection
 function setPriority(priority) {
     window.TrelloPowerUp.getContext()
         .then(context => {
@@ -50,3 +52,20 @@ function setPriority(priority) {
         })
         .catch(error => console.error("Error setting priority:", error));
 }
+
+// Ensuring messages are properly handled and responded to
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.type === "setPriority") {
+        try {
+            setTimeout(() => {
+                console.log("Priority set to:", request.priority);
+                sendResponse({ success: true, message: "Priority Updated!" });
+            }, 500);
+        } catch (error) {
+            console.error("Error setting priority:", error);
+            sendResponse({ success: false, error: error.message });
+        }
+        return true; // Keeps the message port open for async response
+    }
+    return false;
+});
