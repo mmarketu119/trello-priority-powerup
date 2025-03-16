@@ -7,9 +7,9 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static('Public'));
 
-// Handle Trello Power-Up manifest
+// Serve Trello Power-Up manifest
 app.get('/manifest.json', (req, res) => {
     res.json({
         "title": "Trello Quick Priority Setter",
