@@ -1,5 +1,4 @@
 // script.js - Trello Power-Up Frontend Logic
-
 window.TrelloPowerUp.initialize({
     "card-buttons": function (t, options) {
         return [{
@@ -15,10 +14,11 @@ window.TrelloPowerUp.initialize({
 function setPriorityPopup(t) {
     return t.popup({
         title: "Set Priority",
-        url: "./public/popup.html",
+        url: "./popup.html",
         height: 184
-    })
-    .catch(err => console.error("Popup error:", err));
+    }).catch(err => {
+        console.error("Popup error:", err);
+    });
 }
 
 function getPriorityBadge(t) {
@@ -31,5 +31,22 @@ function getPriorityBadge(t) {
                 }];
             }
             return [];
+        })
+        .catch(error => {
+            console.error("Badge error:", error);
+            return [];
         });
+}
+
+// Function to set priority
+function setPriority(priority) {
+    window.TrelloPowerUp.getContext()
+        .then(context => {
+            return window.TrelloPowerUp.set('card', 'shared', 'priority', priority);
+        })
+        .then(() => {
+            console.log("Priority set to:", priority);
+            window.TrelloPowerUp.closePopup();
+        })
+        .catch(error => console.error("Error setting priority:", error));
 }

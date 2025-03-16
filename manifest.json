@@ -4,24 +4,23 @@
     "icon": "https://mmarketu119.github.io/trello-priority-powerup/icon.png",
     "author": "Agile Mediaz LLC",
     "capabilities": {
-      "card-buttons": [
-        {
-          "text": "Set Priority",
-          "callback": "setPriorityPopup"
-        }
-      ],
-      "card-detail-badges": [
-        {
-          "text": "Priority",
-          "callback": "getPriorityBadge"
-        }
-      ]
+        "card-buttons": [
+            {
+                "text": "Set Priority",
+                "callback": "setPriorityPopup"
+            }
+        ],
+        "card-detail-badges": [
+            {
+                "text": "Priority",
+                "callback": "getPriorityBadge"
+            }
+        ]
     },
     "connectors": {
-      "iframe": {
-        "url": "https://mmarketu119.github.io/trello-priority-powerup/"
-      }
+        "iframe": {
+            "url": "https://mmarketu119.github.io/trello-priority-powerup/"
+        }
     },
     "authentication": "none"
-  }
-  
+}
