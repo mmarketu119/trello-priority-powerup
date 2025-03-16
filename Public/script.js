@@ -1,9 +1,29 @@
-// Listen for button clicks and set priority
-document.getElementById("highPriority").addEventListener("click", () => setPriority("High"));
-document.getElementById("mediumPriority").addEventListener("click", () => setPriority("Medium"));
-document.getElementById("lowPriority").addEventListener("click", () => setPriority("Low"));
+window.TrelloPowerUp.initialize({
+    "card-buttons": function (t, options) {
+        return [{
+            text: "Set Priority",
+            callback: setPriorityPopup
+        }];
+    }
+});
 
-function setPriority(priority) {
-    window.TrelloPowerUp.iframe().set("card", "shared", "priority", priority)
-    .then(() => window.TrelloPowerUp.iframe().closePopup());
+function setPriorityPopup(t) {
+    return t.popup({
+        title: "Set Priority",
+        url: "./public/popup.html",
+        height: 184
+    });
+}
+
+function getPriorityBadge(t) {
+    return t.get('card', 'shared', 'priority')
+        .then(function (priority) {
+            if (priority) {
+                return {
+                    text: "Priority: " + priority,
+                    color: priority === "High" ? "red" : priority === "Medium" ? "yellow" : "green"
+                };
+            }
+            return null;
+        });
 }
