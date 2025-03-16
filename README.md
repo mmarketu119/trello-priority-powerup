@@ -1,43 +1,35 @@
-// server.js - Trello Power-Up Backend
-const express = require('express');
-const cors = require('cors');
-const app = express();
-const PORT = process.env.PORT || 3000;
+// script.js - Trello Power-Up Frontend Logic
 
-app.use(cors());
-app.use(express.json());
-app.use(express.static('public'));
+window.TrelloPowerUp.initialize({
+    "card-buttons": function (t, options) {
+        return [{
+            text: "Set Priority",
+            callback: setPriorityPopup
+        }];
+    },
+    "card-detail-badges": function (t, options) {
+        return getPriorityBadge(t);
+    }
+});
 
-// Trello Power-Up capabilities
-app.get('/manifest.json', (req, res) => {
-    res.json({
-        "title": "Trello Quick Priority Setter",
-        "description": "A simple Power-Up to set priority levels on Trello cards.",
-        "icon": "https://mmarketu119.github.io/trello-priority-powerup/icon.png",
-        "author": "Agile Mediaz LLC",
-        "capabilities": {
-            "card-buttons": [
-                {
-                    "text": "Set Priority",
-                    "callback": "setPriorityPopup"
-                }
-            ],
-            "card-detail-badges": [
-                {
-                    "text": "Priority",
-                    "callback": "getPriorityBadge"
-                }
-            ]
-        },
-        "connectors": {
-            "iframe": {
-                "url": "https://mmarketu119.github.io/trello-priority-powerup/"
+function setPriorityPopup(t) {
+    return t.popup({
+        title: "Set Priority",
+        url: "./public/popup.html",
+        height: 184
+    })
+    .catch(err => console.error("Popup error:", err));
+}
+
+function getPriorityBadge(t) {
+    return t.get('card', 'shared', 'priority')
+        .then(function (priority) {
+            if (priority) {
+                return [{
+                    text: "Priority: " + priority,
+                    color: priority === "High" ? "red" : priority === "Medium" ? "yellow" : "green"
+                }];
             }
-        },
-        "authentication": "none"
-    });
-});
-
-app.listen(PORT, () => {
-    console.log(`Power-Up server running on port ${PORT}`);
-});
+            return [];
+        });
+}
